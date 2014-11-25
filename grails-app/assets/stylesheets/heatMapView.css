@@ -1,0 +1,11 @@
+/*
+*= require ol.css
+*= require_self
+*/
+
+.mapContainer {
+    width: 1024px;
+    height: 512px;
+    border: solid thin #255b17;
+    margin: auto;
+}
