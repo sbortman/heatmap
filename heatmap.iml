@@ -23,19 +23,26 @@
         <naming-strategy-map />
       </configuration>
     </facet>
+    <facet type="Spring" name="Spring2">
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/web-app/WEB-INF/applicationContext.xml</file>
+        </fileset>
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/grails-app/utils" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/groovy" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/grails-app/i18n" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/grails-app/controllers" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/grails-app/domain" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/grails-app/services" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/grails-app/taglib" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/unit" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/grails-app/utils" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/grails-app/taglib" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/integration" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/work/plugin-build-classes" />
@@ -51,7 +58,6 @@
     <orderEntry type="module-library" exported="">
       <library name="Grails User Library (heatmap)">
         <CLASSES>
-          <root url="file://$MODULE_DIR$/lib" />
           <root url="jar://$MAVEN_REPOSITORY$/org/javassist/javassist/3.17.1-GA/javassist-3.17.1-GA.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/liquibase/liquibase-core/2.0.5/liquibase-core-2.0.5.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar!/" />
@@ -244,6 +250,7 @@
           <root url="jar://$MAVEN_REPOSITORY$/postgresql/postgresql/8.4-701.jdbc4/postgresql-8.4-701.jdbc4.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.3.0.Final/hibernate-core-4.3.0.Final.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-spatial/4.3/hibernate-spatial-4.3.jar!/" />
+          <root url="file://$MODULE_DIR$/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -251,5 +258,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="heatmap-grailsPlugins" />
+    <orderEntry type="library" name="grails-2.4.4 (2)" level="application" />
   </component>
 </module>

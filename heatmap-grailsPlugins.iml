@@ -70,9 +70,11 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="grails-2.4.4" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="grails-2.4.4 (2)" level="application" />
     <orderEntry type="module-library" exported="">
       <library name="Grails User Library (heatmap-grailsPlugins)">
         <CLASSES>
+          <root url="file://$MODULE_DIR$/target/work/plugins/p6spy-0.5/lib" />
           <root url="jar://$MAVEN_REPOSITORY$/org/javassist/javassist/3.17.1-GA/javassist-3.17.1-GA.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/liquibase/liquibase-core/2.0.5/liquibase-core-2.0.5.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar!/" />
@@ -265,7 +267,6 @@
           <root url="jar://$MAVEN_REPOSITORY$/postgresql/postgresql/8.4-701.jdbc4/postgresql-8.4-701.jdbc4.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.3.0.Final/hibernate-core-4.3.0.Final.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-spatial/4.3/hibernate-spatial-4.3.jar!/" />
-          <root url="file://$MODULE_DIR$/target/work/plugins/p6spy-0.5/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
