@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -163,7 +163,7 @@
 </head>
 <body>
 <div class="container">
-    <nav class="navbar navbar-fixed-top navbar-default" role="navigation">
+    <nav ng-controller="NavBarController" class="navbar navbar-fixed-top navbar-default" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
 
@@ -223,7 +223,8 @@
 </div>
 </nav>
 <div class="navbar-offset"></div>
-<div id="map">
+<div ng-controller="MapController" id="map">
+    <p class="text-center">{{message}}</p>
 </div>
 <div class="row main-row">
     <div class="col-sm-4 col-md-3 sidebar sidebar-left pull-left">
@@ -241,6 +242,7 @@
                     </h4>
                 </div>
                 <div id="layers" class="panel-collapse collapse in">
+                    <p ng-controller="LayersPaneController" class="text-center">{{message}}</p>
                     <div class="panel-body list-group">
                         <a href="#" class="list-group-item">
                             <i class="fa fa-globe"></i> Reference Map
@@ -265,6 +267,7 @@
                 </div>
                 <div id="properties" class="panel-collapse collapse in">
                     <div class="panel-body">
+                        <p ng-controller="ToolsPaneController" class="text-center">{{message}}</p>
                         <p><b>Add map/image tools here</b></p>
                         <button id="fly" type="button" class="btn btn-primary">Zoom</button>
                         <p>
@@ -301,18 +304,9 @@
                 </div>
                 <div id="taskpane" class="panel-collapse collapse in">
                     <div class="panel-body">
-                        <p>
-                            Lorem ipsum dolor sit amet, vel an wisi propriae. Sea ut graece gloriatur. Per ei quando dicant vivendum. An insolens appellantur eos, doctus convenire vis et, at solet aeterno intellegebat qui.
-                        </p>
-                        <p>
-                            Elitr minimum inciderint qui no. Ne mea quaerendum scriptorem consequuntur. Mel ea nobis discere dignissim, aperiam patrioque ei ius. Stet laboramus eos te, his recteque mnesarchum an, quo id adipisci salutatus. Quas solet inimicus eu per. Sonet conclusionemque id vis.
-                        </p>
-                        <p>
-                            Eam vivendo repudiandae in, ei pri sint probatus. Pri et lorem praesent periculis, dicam singulis ut sed. Omnis patrioque sit ei, vis illud impetus molestiae id. Ex viderer assentior mel, inani liber officiis pro et. Qui ut perfecto repudiandae, per no hinc tation labores.
-                        </p>
-                        <p>
-                            Pro cu scaevola antiopam, cum id inermis salutatus. No duo liber gloriatur. Duo id vitae decore, justo consequat vix et. Sea id tale quot vitae.
-                        </p>
+                       <div ng-controller="TaskPaneController" >
+                           {{message}}
+                       </div>
                     </div>
                 </div>
             </div>
@@ -326,6 +320,6 @@
     <i class="fa fa-tasks"></i>
 </div>
 </div>
-<script type="text/javascript" src="../assets/js/app.js"></script>
+%{--<script type="text/javascript" src="../assets/js/app.js"></script>--}%
 </body>
 </html>
