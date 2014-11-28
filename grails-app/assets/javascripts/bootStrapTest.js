@@ -7,4 +7,5 @@
 //= require bootstrap.js
 //= require ol.js
 //= require app.js
+//= require ui-bootstrap-0.12.0.min.js
 //= require_self

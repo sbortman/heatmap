@@ -92,7 +92,8 @@ class HeatMapService
           type: wmsRequest.format.split( '/' )[-1],
           proj: wmsRequest.srs,
           bounds: bounds,
-          layers: [countries, states, raster]
+          //layers: [countries, states, raster] * countries and states are present in OMAR base map, and are not needed.
+          layers: [raster]
       )
 
       try

@@ -142,31 +142,16 @@
 
             $(window).on("resize", applyMargins);
 
-            // var map = new ol.Map({
-            //   target: "map",
-            //   layers: [
-            //     new ol.layer.Tile({
-            //       source: new ol.source.OSM()
-            //     })
-            //   ],
-            //   view: new ol.View({
-            //     center: [0, 0],
-            //     zoom: 2
-            //   })
-            // });
-
-
             applyInitialUIState();
             applyMargins();
         });
     </script>
 </head>
-<body>
+<body ng-controller="MapController" >
 <div class="container">
     <nav ng-controller="NavBarController" class="navbar navbar-fixed-top navbar-default" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
-
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
@@ -223,9 +208,7 @@
 </div>
 </nav>
 <div class="navbar-offset"></div>
-<div ng-controller="MapController" id="map">
-    <p class="text-center">{{message}}</p>
-</div>
+<div id="map"></div>
 <div class="row main-row">
     <div class="col-sm-4 col-md-3 sidebar sidebar-left pull-left">
         <div class="panel-group sidebar-body" id="accordion-left">
@@ -242,7 +225,7 @@
                     </h4>
                 </div>
                 <div id="layers" class="panel-collapse collapse in">
-                    <p ng-controller="LayersPaneController" class="text-center">{{message}}</p>
+                    <p ng-controller="LayersPaneController" class="text-center"></p>
                     <div class="panel-body list-group">
                         <a href="#" class="list-group-item">
                             <i class="fa fa-globe"></i> Reference Map
@@ -267,21 +250,10 @@
                 </div>
                 <div id="properties" class="panel-collapse collapse in">
                     <div class="panel-body">
-                        <p ng-controller="ToolsPaneController" class="text-center">{{message}}</p>
-                        <p><b>Add map/image tools here</b></p>
+                        <p ng-controller="ToolsPaneController" class="text-center"></p>
                         <button id="fly" type="button" class="btn btn-primary">Zoom</button>
-                        <p>
-                            Lorem ipsum dolor sit amet, vel an wisi propriae. Sea ut graece gloriatur. Per ei quando dicant vivendum. An insolens appellantur eos, doctus convenire vis et, at solet aeterno intellegebat qui.
-                        </p>
-                        <p>
-                            Elitr minimum inciderint qui no. Ne mea quaerendum scriptorem consequuntur. Mel ea nobis discere dignissim, aperiam patrioque ei ius. Stet laboramus eos te, his recteque mnesarchum an, quo id adipisci salutatus. Quas solet inimicus eu per. Sonet conclusionemque id vis.
-                        </p>
-                        <p>
-                            Eam vivendo repudiandae in, ei pri sint probatus. Pri et lorem praesent periculis, dicam singulis ut sed. Omnis patrioque sit ei, vis illud impetus molestiae id. Ex viderer assentior mel, inani liber officiis pro et. Qui ut perfecto repudiandae, per no hinc tation labores.
-                        </p>
-                        <p>
-                            Pro cu scaevola antiopam, cum id inermis salutatus. No duo liber gloriatur. Duo id vitae decore, justo consequat vix et. Sea id tale quot vitae.
-                        </p>
+                        <br/>
+                        <br/>
                     </div>
                 </div>
             </div>
@@ -305,7 +277,108 @@
                 <div id="taskpane" class="panel-collapse collapse in">
                     <div class="panel-body">
                        <div ng-controller="TaskPaneController" >
-                           {{message}}
+                           %{--<div ng-controller="AccordionDemoCtrl">--}%
+                               %{--<p>--}%
+                                   %{--<button class="btn btn-default btn-sm" ng-click="status.open = !status.open">Toggle last panel</button>--}%
+                                   %{--<button class="btn btn-default btn-sm" ng-click="status.isFirstDisabled = ! status.isFirstDisabled">Enable / Disable first panel</button>--}%
+                               %{--</p>--}%
+
+                               %{--<label class="checkbox">--}%
+                                   %{--<input type="checkbox" ng-model="oneAtATime">--}%
+                                   %{--Open only one at a time--}%
+                               %{--</label>--}%
+                               %{--<accordion close-others="oneAtATime">--}%
+                                   %{--<accordion-group heading="Static Header, initially expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">--}%
+                                       %{--This content is straight in the template.--}%
+                                   %{--</accordion-group>--}%
+                                   %{--<accordion-group heading="{{group.title}}" ng-repeat="group in groups">--}%
+                                       %{--{{group.content}}--}%
+                                   %{--</accordion-group>--}%
+                                   %{--<accordion-group heading="Dynamic Body Content">--}%
+                                       %{--<p>The body of the accordion group grows to fit the contents</p>--}%
+                                       %{--<button class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>--}%
+                                       %{--<div ng-repeat="item in items">{{item}}</div>--}%
+                                   %{--</accordion-group>--}%
+                                   %{--<accordion-group is-open="status.open">--}%
+                                       %{--<accordion-heading>--}%
+                                           %{--I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>--}%
+                                       %{--</accordion-heading>--}%
+                                       %{--This is just some content to illustrate fancy headings.--}%
+                                   %{--</accordion-group>--}%
+                               %{--</accordion>--}%
+                           %{--</div>--}%
+
+                           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                               <div class="panel panel-default">
+                                   <div class="panel-heading" role="tab" id="headingOne">
+                                       <h4 class="panel-title">
+                                           <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                               Map Extent
+                                           </a>
+                                       </h4>
+                                   </div>
+                                   <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                       <div class="panel-body">
+                                           <p>Min X: {{extent[0]}}</p>
+                                           <p>Min Y: {{extent[1]}}</p>
+                                           <p>Max X: {{extent[2]}}</p>
+                                           <p>Max Y: {{extent[3]}}</p>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="panel panel-default">
+                                   <div class="panel-heading" role="tab" id="headingTwo">
+                                       <h4 class="panel-title">
+                                           <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                               User and Count
+                                           </a>
+                                       </h4>
+                                   </div>
+                                   <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                       <div class="panel-body">
+                                           <table class="table table-striped">
+                                               <tbody>
+                                               <th>User</th>
+                                               <th>Count</th>
+                                               <tr ng-repeat="user in mapUser track by $index">
+                                                   <td>{{user.user_name}}</td>
+                                                   <td>{{user.count}}</td>
+                                               </tr>
+                                               </tbody>
+                                           </table>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="panel panel-default">
+                                   <div class="panel-heading" role="tab" id="headingThree">
+                                       <h4 class="panel-title">
+                                           <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                               IP and Count
+                                           </a>
+                                       </h4>
+                                   </div>
+                                   <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                       <div class="panel-body">
+                                           <table class="table table-striped">
+                                               <tbody>
+                                               <th>IP</th>
+                                               <th>Count</th>
+                                               <tr ng-repeat="ip in mapIp track by $index">
+                                                   <td>{{ip.ip}}</td>
+                                                   <td>{{ip.count}}</td>
+                                               </tr>
+                                               </tbody>
+                                           </table>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+
+
+
+
+
                        </div>
                     </div>
                 </div>
