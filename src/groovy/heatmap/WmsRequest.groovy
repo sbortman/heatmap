@@ -22,4 +22,8 @@ class WmsRequest
   String layers
   String styles
   Boolean transparent
+
+  String start_date
+  String end_date
+  Double min_gsd
 }
