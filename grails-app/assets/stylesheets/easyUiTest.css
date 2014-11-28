@@ -1,0 +1,14 @@
+/*
+*= require ../js/jeasyui/themes/black/easyui.css
+*= require ../js/jeasyui/themes/icon.css
+*= require ../js/jeasyui/demo/demo.css
+*= require ol.css
+*/
+
+.eastPanel {
+    width: 300px;
+}
+
+.westPanel {
+    width: 325px;
+}

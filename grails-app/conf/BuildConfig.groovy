@@ -58,7 +58,7 @@ grails.project.dependency.resolution = {
 
     compile 'org.hibernate:hibernate-spatial:4.3'
 
-    compile ( 'org.geoscript:geoscript-groovy:1.4.0' ) {
+    compile( 'org.geoscript:geoscript-groovy:1.4.0' ) {
       excludes "slf4j-log4j12",
           'ehcache'
     }
@@ -88,3 +88,5 @@ grails.project.dependency.resolution = {
     //compile ":handlebars-asset-pipeline:1.3.0.3"
   }
 }
+
+grails.plugin.location.jeasyui = '../jeasyui'

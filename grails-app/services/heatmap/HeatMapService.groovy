@@ -51,64 +51,94 @@ class HeatMapService
           "Data Source": dataSourceUnproxied
       )
 
-      def wmsLog = postgis['wms_log']
-      def proc = new GeoScriptProcess( "vec:Heatmap" )
-      def bounds = wmsRequest.bbox.split( ',' )*.toDouble() as Bounds
-
-      def cursor = wmsLog.getCursor(
-//          filter: Filter.PASS
-//          filter: 'end_date > 2014-07-01'
-          filter: Filter.bbox( 'geometry', bounds )//.and("")
-      )
-
-      bounds.proj = wmsRequest.srs
-
-      def raster = proc.execute(
-          data: cursor,
-          radiusPixels: 20,
-//    weightAttr: '',
-          pixelsPerCell: 1,
-          outputBBOX: bounds.env,
-          outputWidth: wmsRequest.width,
-          outputHeight: wmsRequest.height
-      )?.result
-
-      cursor.close()
-
-      raster.style = new ColorMap( [
-          [color: "#FFFFFF", quantity: 0, label: "nodata", opacity: 0],
-          [color: "#FFFFFF", quantity: 0.02, label: "nodata", opacity: 0],
-          [color: "#4444FF", quantity: 0.1, label: "nodata"],
-          [color: "#FF0000", quantity: 0.5, label: "values"],
-          [color: "#FFFF00", quantity: 1.0, label: "values"]
-      ] ).opacity( 0.25 )
-
-      countries.style = style
-      states.style = style
-
-      def map = new GeoScriptMap(
-          width: wmsRequest.width,
-          height: wmsRequest.height,
-          type: wmsRequest.format.split( '/' )[-1],
-          proj: wmsRequest.srs,
-          bounds: bounds,
-          layers: [countries, states, raster]
-      )
-
       try
       {
+
+        def wmsLog = postgis['wms_log']
+        def proc = new GeoScriptProcess( "vec:Heatmap" )
+        def bounds = wmsRequest.bbox.split( ',' )*.toDouble() as Bounds
+
+        def cursor = wmsLog.getCursor(
+            filter: createFilterFromParams( wmsRequest )
+        )
+
+        bounds.proj = wmsRequest.srs
+
+        def raster = proc.execute(
+            data: cursor,
+            radiusPixels: 20,
+//    weightAttr: '',
+            pixelsPerCell: 1,
+            outputBBOX: bounds.env,
+            outputWidth: wmsRequest.width,
+            outputHeight: wmsRequest.height
+        )?.result
+
+        cursor.close()
+
+        raster.style = new ColorMap( [
+            [color: "#FFFFFF", quantity: 0, label: "nodata", opacity: 0],
+            [color: "#FFFFFF", quantity: 0.02, label: "nodata", opacity: 0],
+            [color: "#4444FF", quantity: 0.1, label: "nodata"],
+            [color: "#FF0000", quantity: 0.5, label: "values"],
+            [color: "#FFFF00", quantity: 1.0, label: "values"]
+        ] ).opacity( 0.25 )
+
+        countries.style = style
+        states.style = style
+
+        def map = new GeoScriptMap(
+            width: wmsRequest.width,
+            height: wmsRequest.height,
+            type: wmsRequest.format.split( '/' )[-1],
+            proj: wmsRequest.srs,
+            bounds: bounds,
+            layers: [
+//              countries, states,
+raster
+            ]
+        )
+
         map.render( buffer )
+        map.close()
       }
       catch ( e )
       {
       }
 
-      map.close()
       shpDir.close()
       postgis.close()
       break
     }
 
     [contentType: wmsRequest.format, buffer: buffer.toByteArray()]
+  }
+
+  def createFilterFromParams(def params)
+  {
+    def bounds = ( params.bbox ?: '-180,-90,180,90' ).split( ',' )*.toDouble() as Bounds
+
+    bounds.proj = 'epsg:4326'
+
+    def filter = Filter.bbox( 'geometry', bounds )
+
+    if ( params.start_date )
+    {
+      filter = filter.and( "end_date >= '${params.start_date}'" )
+    }
+
+    if ( params.end_date )
+    {
+      filter = filter.and( "end_date <= '${params.end_date}'" )
+    }
+
+    if ( params.min_gsd )
+    {
+      filter = filter.and( "mean_gsd <= ${params.min_gsd}" )
+    }
+
+    println filter
+
+    filter
   }
 }

@@ -89,6 +89,7 @@ INSERT INTO wms_log (
     def dateFormats = [
         'yyyy-MM-dd hh:mm:ss.SSS',
         'yyyy-MM-dd hh:mm:ss',
+        'MM/dd/yyyy hh:mm:ss'
     ]
 
     def output

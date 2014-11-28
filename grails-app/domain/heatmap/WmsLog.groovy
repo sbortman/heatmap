@@ -46,6 +46,11 @@ class WmsLog
     version false
     url type: 'text'
     layers type: 'text'
+    endDate index: 'wms_log_end_date_idx'
+    userName index: 'wms_log_user_name_idx'
+    ip index: 'wms_log_ip_idx'
+    layers index: 'wms_log_layers_idx'
+    meanGsd index: 'wms_log_mean_gsd_idx'
     geometry type: GeometryType, sqlType: 'geometry(POLYGON, 4326)'
   }
 }
