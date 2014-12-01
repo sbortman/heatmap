@@ -1,14 +1,13 @@
-var app = angular.module('app', ['ui.bootstrap'])
+var app = angular.module('app', ['ngTable'])
 
 app.factory("mapDataFactory", function ($http, $cacheFactory){
 
 	return{
 		getMapInfo : function(category, extent) {
 			return $http({
-				// bounding box needs to be a variable
 				//url: '/heatmap/heatMapView/getStatsByCategory?category=user_name&bbox=-216.73828125%2C-70.48828125%2C216.73828125%2C70.48828125&max=10',
 				//url: '/heatmap/heatMapView/getStatsByCategory?category=user_name&bbox=' + extent + ' &max=10',
-				url: '/heatmap/heatMapView/getStatsByCategory?category=' + category + '&' + 'bbox=' + extent + ' &max=10',
+				url: '/heatmap/heatMapView/getStatsByCategory?category=' + category + '&' + 'bbox=' + extent + ' &max=100',
 				method: 'GET'
 			})
 		}
@@ -16,25 +15,21 @@ app.factory("mapDataFactory", function ($http, $cacheFactory){
 
 });
 
-app.controller("NavBarController", function ($scope){
-	console.log('NavBarController firing!');
-	$scope.message = ("This is the NavBarController");
-});
-
 app.controller("MapController", function ($scope, mapDataFactory ){
 
 	console.log('MapController firing!');
 	$scope.message = ("This is the MapController");
-	var baghdad = ol.proj.transform([44.355905,33.311686], 'EPSG:4326', 'EPSG:3857');
-	var tehran = ol.proj.transform([51.3498186,35.7014396], 'EPSG:4326', 'EPSG:3857');
+	//var baghdad = ol.proj.transform([44.355905,33.311686], 'EPSG:4326', 'EPSG:3857');
+	var baghdad = [44.355905,33.311686];
+	var tehran = [51.3498186,35.7014396];
 
 	var view = new ol.View({
   		// the view's initial state
   		//center: baghdad,
   		//zoom: 10
 		projection: 'EPSG:4326',
-		center: [0, 0],
-		zoom: 2
+		center: baghdad,
+		zoom: 3
 	});
 
 	$scope.map = new ol.Map({
@@ -77,6 +72,8 @@ app.controller("MapController", function ($scope, mapDataFactory ){
 		$scope.mapUser = [];
 		mapDataFactory.getMapInfo('user_name', $scope.extent[0] + ',' + $scope.extent[1] + ',' + $scope.extent[2] + ',' + $scope.extent[3]).success(function(data){
 			$scope.mapUser=data;
+			console.log($scope.mapUser=data);
+
 		});
 
 		$scope.mapIp = [];
@@ -84,6 +81,11 @@ app.controller("MapController", function ($scope, mapDataFactory ){
 			$scope.mapIp=data;
 		});
 
+		$scope.mapLayers = [];
+		mapDataFactory.getMapInfo('layers', $scope.extent[0] + ',' + $scope.extent[1] + ',' + $scope.extent[2] + ',' + $scope.extent[3]).success(function(data){
+			$scope.mapLayers=data;
+			//console.log($scope.mapLayers);
+		});
 
 		//['user_name', 'ip', 'layers'].forEach( function ( category )
 		//['user_name'].forEach( function ( category )
@@ -117,7 +119,7 @@ app.controller("MapController", function ($scope, mapDataFactory ){
     	resolution: 4 * view.getResolution(),
     	start: start
   	});
-	map.beforeRender(pan, bounce);
+	$scope.map.beforeRender(pan, bounce);
   		view.setCenter(tehran);
 	}, false);
 
@@ -140,6 +142,11 @@ app.controller("ToolsPaneController", function ($scope){
 app.controller("TaskPaneController", function ($scope){
 	console.log('TaskPaneController firing!');
 	$scope.message = ("This is the TaskPaneController");
+});
+
+app.controller("NavBarController", function ($scope){
+	console.log('NavBarController firing!');
+	$scope.message = ("This is the NavBarController");
 });
 
 app.controller('AccordionDemoCtrl', function ($scope) {
@@ -181,26 +188,4 @@ app.controller('AccordionDemoCtrl', function ($scope) {
 
 
 
-
-
-
-
-
-
-// canvas example stuff down here	
-	// var map = new ol.Map({
-	//   layers: [],
-	//   renderer: 'canvas',
-	//   target: document.getElementById('map'),
-	//   view: new ol.View({
-	//   	// home --> 28.170904,-80.593862
-	//     //center: ol.proj.transform([-74.0064, 40.7142], 'EPSG:4326', 'EPSG:3857'),
-	//     center: ol.proj.transform([-80.593862, 28.170904], 'EPSG:4326', 'EPSG:3857'),
-	//     maxZoom: 19,
-	//     zoom: 14
-	//   })
-	// });
-
-	//console.log('done firing');
-//});
 

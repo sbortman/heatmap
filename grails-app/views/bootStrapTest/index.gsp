@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <title>OMAR 2.0 (Tao)</title>
 
-
-
     <asset:stylesheet src="bootStrapTest.css"/>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css" />
+
     <style type="text/css">
     body { overflow: hidden; }
 
@@ -64,6 +64,16 @@
     .panel-group .panel {
         opacity: 0.9;
     }
+
+    #tableLayers {
+        table-layout: fixed;
+        word-wrap: break-word;
+    }
+
+    .ng-table {
+        border: 1px solid #000;
+    }Í
+
 
     </style>
    <asset:javascript src="bootStrapTest.js"/>
@@ -165,7 +175,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Selection</a></li>
+                    %{--<li class="active"><a href="#">Selection</a></li>--}%
                     <li><a href="#"></a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Edit <b class="caret"></b></a>
@@ -182,7 +192,7 @@
                 </ul>
                 <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Enter Coordinates...">
+                        <input type="text" class="form-control" placeholder="Place name search...">
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
@@ -312,7 +322,8 @@
                                <div class="panel panel-default">
                                    <div class="panel-heading" role="tab" id="headingOne">
                                        <h4 class="panel-title">
-                                           <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                           <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                                              aria-expanded="false" aria-controls="collapseOne">
                                                Map Extent
                                            </a>
                                        </h4>
@@ -335,17 +346,17 @@
                                        </h4>
                                    </div>
                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                       <div class="panel-body">
-                                           <table class="table table-striped">
-                                               <tbody>
+                                   <div class="panel-body">
+                                       <table class="table table-striped">
+                                           <tbody>
                                                <th>User</th>
                                                <th>Count</th>
                                                <tr ng-repeat="user in mapUser track by $index">
                                                    <td>{{user.user_name}}</td>
                                                    <td>{{user.count}}</td>
                                                </tr>
-                                               </tbody>
-                                           </table>
+                                           </tbody>
+                                       </table>
                                        </div>
                                    </div>
                                </div>
@@ -366,6 +377,31 @@
                                                <tr ng-repeat="ip in mapIp track by $index">
                                                    <td>{{ip.ip}}</td>
                                                    <td>{{ip.count}}</td>
+                                               </tr>
+                                               </tbody>
+                                           </table>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="panel panel-default">
+                                   <div class="panel-heading" role="tab" id="headingFour">
+                                       <h4 class="panel-title">
+                                           <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                                              href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                                               Layer and Count
+                                           </a>
+                                       </h4>
+                                   </div>
+                                   <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
+                                        aria-labelledby="headingFour">
+                                       <div class="panel-body">
+                                           <table class="table table-striped" id="tableLayers">
+                                               <tbody>
+                                               <th>Layer</th>
+                                               <th>Count</th>
+                                               <tr ng-repeat="layer in mapLayers track by $index">
+                                                   <td style="font-size: 8px;">{{layer.layers}}</td>
+                                                   <td>{{layer.count}}</td>
                                                </tr>
                                                </tbody>
                                            </table>
