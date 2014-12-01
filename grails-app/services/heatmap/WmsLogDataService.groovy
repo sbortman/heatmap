@@ -8,9 +8,11 @@ import geoscript.geom.io.WkbReader
 
 import grails.transaction.Transactional
 
-@Transactional
+//@Transactional
 class WmsLogDataService
 {
+  static transactional = false
+
   def static final insertRecordSQL = """
 INSERT INTO wms_log (
     bbox, end_date, format, geometry, height, internal_time, ip, layers, mean_gsd,
@@ -23,6 +25,7 @@ INSERT INTO wms_log (
 
   def dataSourceUnproxied
 
+  @Transactional
   def importCsvFile(def csvFile)
   {
     def reader = new CSVReader( csvFile.newReader() )
@@ -122,6 +125,8 @@ INSERT INTO wms_log (
 
   def getStatsByCategory(StatQuery query)
   {
+    //println query
+
     def sql = new Sql( dataSourceUnproxied )
     def bbox = query.bbox.split( ',' )*.toDouble() as Bounds
     def params = [max: query.max, wkt: bbox.polygon.wkt]
@@ -142,6 +147,12 @@ INSERT INTO wms_log (
       params.endDate = parseTimestamp( query.endDate )
     }
 
+    if ( query.maxGSD )
+    {
+      where += " AND mean_gsd <= :maxGSD"
+      params.maxGSD = query.maxGSD
+    }
+
     def topSQL = """
     SELECT ${query.category}, count(*) as count
     FROM wms_log
@@ -150,6 +161,8 @@ INSERT INTO wms_log (
     ORDER BY count DESC
     LIMIT :max
     """
+
+    //println topSQL
 
     def results = sql.rows( topSQL, params )
 

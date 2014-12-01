@@ -12,12 +12,23 @@ class HeatMapViewController
   def getTile(WmsRequest wmsRequest)
   {
     //println params
-    println wmsRequest
+    //println wmsRequest
 
     def results = heatMapService.getTile( wmsRequest )
 
     render contentType: results.contentType, file: results.buffer
   }
+
+  def getRefTile(WmsRequest wmsRequest)
+  {
+    //println params
+    //println wmsRequest
+
+    def results = heatMapService.getRefTile( wmsRequest )
+
+    render contentType: results.contentType, file: results.buffer
+  }
+
 
   def getStatsByCategory(StatQuery query)
   {

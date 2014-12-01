@@ -25,5 +25,5 @@ class WmsRequest
 
   String start_date
   String end_date
-  Double min_gsd
+  Double max_gsd
 }

@@ -15,4 +15,5 @@ class StatQuery
   String endDate
   String bbox
   String category
+  Double maxGSD
 }

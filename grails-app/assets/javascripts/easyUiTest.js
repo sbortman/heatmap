@@ -35,7 +35,17 @@ MapWidget = (function ()
                         params: {
                             'LAYERS': 'ne:NE1_HR_LC_SR_W_DR'
                         }
-                    } )
+                    } ),
+                    extent: ol.extent.buffer( [-180, -90, 180, 90], 0 )
+                } ),
+                new ol.layer.Tile( {
+                    source: new ol.source.TileWMS( {
+                        url: '/heatmap/heatMapView/getRefTile',
+                        params: {
+                            VERSION: '1.1.1'
+                        }
+                    } ),
+                    extent: ol.extent.buffer( [-180, -90, 180, 90], 0 )
                 } ),
                 theHeatMapLayer
             ];
@@ -93,7 +103,7 @@ MapWidget = (function ()
                  }
                  */
 
-            console.log( theHeatMapLayer.getSource().getParams() );
+            //console.log( theHeatMapLayer.getSource().getParams() );
         }
     };
 })();
@@ -103,13 +113,13 @@ Dashboard = (function ()
     var theBBOX = null,
         theStartDate = null,
         theEndDate = null,
-        theMinGSD = null,
+        theMaxGSD = null,
         theFilterParams = [{
             name: 'Start Date', editor: 'datetimebox'
         }, {
             name: 'End Date', editor: 'datetimebox'
         }, {
-            name: 'Min GSD', editor: 'text'
+            name: 'Max GSD', editor: 'text'
         }];
 
     function refresh()
@@ -131,12 +141,12 @@ Dashboard = (function ()
             params.endDate = theEndDate;
         }
 
-        if ( theMinGSD )
+        if ( theMaxGSD )
         {
-            params.minGSD = theMinGSD;
+            params.maxGSD = theMaxGSD;
         }
 
-        console.log( params );
+        //console.log( params );
 
         ['#users', '#ips', '#layers'].forEach( function ( tableId )
         {
@@ -149,7 +159,7 @@ Dashboard = (function ()
             bbox: theBBOX,
             start_date: theStartDate,
             end_date: theEndDate,
-            min_gds: theMinGSD
+            max_gsd: theMaxGSD
         } );
     }
 
@@ -179,9 +189,9 @@ Dashboard = (function ()
                         {
                             theEndDate = row.value;
                         }
-                        else if ( row.name === 'Min GSO' )
+                        else if ( row.name === 'Max GSD' )
                         {
-                            theMinGSD = row.value;
+                            theMaxGSD = row.value;
                         }
                     }
                 } );
@@ -203,7 +213,7 @@ Dashboard = (function ()
 
                 theStartDate = null;
                 theEndDate = null;
-                theMinGSD = null;
+                theMaxGSD = null;
                 refresh();
             } );
 

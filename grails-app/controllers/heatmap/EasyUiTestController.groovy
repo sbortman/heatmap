@@ -15,7 +15,8 @@ class EasyUiTestController
         max: params.int( 'rows' ),
         bbox: params.bbox ?: '-180,-90,180,90',
         startDate: params.startDate,
-        endDate: params.endDate
+        endDate: params.endDate,
+        maxGSD: params.double( 'maxGSD' )
     )
 
     def results = wmsLogDataService.getStatsByCategory( statQuery )

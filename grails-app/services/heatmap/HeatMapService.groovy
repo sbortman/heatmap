@@ -36,11 +36,6 @@ class HeatMapService
       ImageIO.write( image, type, buffer )
       break
     case RenderType.GEOSCRIPT:
-      def style = stroke( color: '#00FF00' ) + fill( opacity: 0 )
-      def shpDir = new Directory( '/data/omar' )
-      def countries = shpDir['world_adm0']
-      def states = shpDir['statesp020']
-
       def postgis = Workspace.getWorkspace(
           dbtype: 'postgis',
           host: '',
@@ -84,6 +79,56 @@ class HeatMapService
             [color: "#FFFF00", quantity: 1.0, label: "values"]
         ] ).opacity( 0.25 )
 
+        def map = new GeoScriptMap(
+            width: wmsRequest.width,
+            height: wmsRequest.height,
+            type: wmsRequest.format.split( '/' )[-1],
+            proj: wmsRequest.srs,
+            bounds: bounds,
+            layers: [
+                raster
+            ]
+        )
+
+        map.render( buffer )
+        map.close()
+      }
+      catch ( e )
+      {
+      }
+
+      postgis.close()
+      break
+    }
+
+    [contentType: wmsRequest.format, buffer: buffer.toByteArray()]
+  }
+
+  def getRefTile(WmsRequest wmsRequest)
+  {
+    def buffer = new ByteArrayOutputStream()
+    def renderType = RenderType.GEOSCRIPT
+
+    switch ( renderType )
+    {
+    case RenderType.BLANK:
+      def image = new BufferedImage( wmsRequest.width, wmsRequest.height, BufferedImage.TYPE_INT_ARGB )
+      def type = wmsRequest.format.split( '/' )[-1]
+
+      ImageIO.write( image, type, buffer )
+      break
+    case RenderType.GEOSCRIPT:
+      def style = stroke( color: '#00FF00' ) + fill( opacity: 0 )
+      def shpDir = new Directory( '/data/omar' )
+      def countries = shpDir['world_adm0']
+      def states = shpDir['statesp020']
+
+      try
+      {
+
+        def bounds = wmsRequest.bbox.split( ',' )*.toDouble() as Bounds
+
+        bounds.proj = wmsRequest.srs
         countries.style = style
         states.style = style
 
@@ -94,8 +139,7 @@ class HeatMapService
             proj: wmsRequest.srs,
             bounds: bounds,
             layers: [
-//              countries, states,
-raster
+                countries, states,
             ]
         )
 
@@ -107,7 +151,6 @@ raster
       }
 
       shpDir.close()
-      postgis.close()
       break
     }
 
@@ -132,12 +175,12 @@ raster
       filter = filter.and( "end_date <= '${params.end_date}'" )
     }
 
-    if ( params.min_gsd )
+    if ( params.max_gsd )
     {
-      filter = filter.and( "mean_gsd <= ${params.min_gsd}" )
+      filter = filter.and( "mean_gsd <= ${params.max_gsd}" )
     }
 
-    println filter
+    //println filter
 
     filter
   }
