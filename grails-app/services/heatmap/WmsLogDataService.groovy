@@ -4,6 +4,7 @@ import au.com.bytecode.opencsv.CSVReader
 import geoscript.geom.Bounds
 import groovy.sql.Sql
 import geoscript.geom.io.WkbReader
+import heatmap.WmsLog
 
 
 import grails.transaction.Transactional
@@ -118,7 +119,14 @@ INSERT INTO wms_log (
 
     return output
   }
+  def getWMSInfoByLayerId (def layerId) {
+    println layerId
+    def layerInfo = WmsLog.executeQuery("select new map(bbox as bbox) from WmsLog where layers=:layerId",
+            [layerId: layerId], [max: 1])
+    println layerInfo
+    return layerInfo
 
+}
   def getStatsByCategory(StatQuery query)
   {
     def sql = new Sql( dataSourceUnproxied )

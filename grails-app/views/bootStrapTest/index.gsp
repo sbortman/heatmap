@@ -8,7 +8,6 @@
 
     <asset:stylesheet src="bootStrapTest.css"/>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css" />
 
     <style type="text/css">
     body { overflow: hidden; }
@@ -70,9 +69,9 @@
         word-wrap: break-word;
     }
 
-    .ng-table {
-        border: 1px solid #000;
-    }Í
+    /*.ng-table {*/
+        /*border: 1px solid #ccc;*/
+    /*}Í*/
 
 
     </style>
@@ -156,6 +155,7 @@
             applyMargins();
         });
     </script>
+
 </head>
 <body ng-controller="MapController" >
 <div class="container">
@@ -234,19 +234,125 @@
                         </span>
                     </h4>
                 </div>
-                <div id="layers" class="panel-collapse collapse in">
-                    <p ng-controller="LayersPaneController" class="text-center"></p>
-                    <div class="panel-body list-group">
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-globe"></i> Reference Map
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-globe"></i> Imagery
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-globe"></i> WMS
-                        </a>
+
+
+
+
+
+                <div ng-controller="LayersPaneController" id="layers" class="panel-collapse collapse in" style="max-height: 475px; overflow-y:scroll;">
+
+
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Add Layer
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel"
+                                 aria-labelledby="headingTwo">
+                                <div class="panel-body" style="max-height: 475px; overflow-y:scroll;">
+                                    <form>
+                                        <input type="hidden" ng-model="newLayer.id" />
+                                        <p><b>WMS Url:</b><br>
+                                            <input type="text" ng-model="newLayer.url" /></p>
+                                        <p><b>Layers:</b><br>
+                                            <input type="text" ng-model="newLayer.params.LAYERS" /></p>
+                                        <p><b>Version:</b><br>
+                                            <input type="text" ng-model="newLayer.params.VERSION" /></p>
+                                        <input type="button" value="Add Layer" ng-click="addLayer()" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Layer list
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                <div class="panel-body" style="max-height: 475px; overflow-y:scroll;">
+                                    <div ng-repeat="layer in layers" style="padding-left: 15px">
+
+
+                                        <p><b>Id:</b><br>
+                                            {{ layer.id }}</p>
+                                        <p><b>Url:</b><br>
+                                            {{ layer.url }}</p>
+                                        <p><b>params.LAYERS:</b><br>
+                                            {{ layer.params.LAYERS }}</p>
+                                        <p><b>params.VERSION:</b><br>
+                                            {{ layer.params.VERSION }}</p>
+                                        <p><b>Horizontal Swipe:</b><br>
+                                            <input type="range" ng-model="layer.swipe" ng-change="swipe(layer.id)" /></p>
+                                        <p><b>Visible:</b><br>
+                                            <input type="checkbox" ng-model="layer.visible" ng-change="visible(layer.id)" /></p>
+                                        <p><b>opacity:</b><br>
+                                            <input type="range" min="0" max="1" step="0.01" ng-model="layer.opacity" ng-change="opacity(layer.id)">
+                                        <p><b>Actions:</b><br>
+                                            <a href="#" ng-click="edit(layer.id)">edit</a> |
+                                            <a href="#" ng-click="delete(layer.id)">delete</a> |
+                                            <a href="#" ng-click="addLayerToMap(layer.id)">add</a>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        %{--<div class="panel panel-default">--}%
+                            %{--<div class="panel-heading" role="tab" id="headingFour">--}%
+                                %{--<h4 class="panel-title">--}%
+                                    %{--<a class="collapsed" data-toggle="collapse" data-parent="#accordion"--}%
+                                       %{--href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">--}%
+                                        %{--Extra--}%
+                                    %{--</a>--}%
+                                %{--</h4>--}%
+                            %{--</div>--}%
+                            %{--<div id="collapseFour" class="panel-collapse collapse" role="tabpanel"--}%
+                                 %{--aria-labelledby="headingFour">--}%
+                                %{--<div class="panel-body" style="max-height: 475px; overflow-y:scroll;">--}%
+                                    %{--Extra, if needed...--}%
+                                %{--</div>--}%
+                            %{--</div>--}%
+                        %{--</div>--}%
                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 </div>
             </div>
             <div class="panel panel-default">
@@ -269,10 +375,19 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
     <div class="col-sm-4 col-md-6 mid"></div>
     <div class="col-sm-4 col-md-3 sidebar sidebar-right pull-right">
+
         <div class="panel-group sidebar-body" id="accordion-right">
             <div class="panel panel-default">
+
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" href="#taskpane">
@@ -284,118 +399,101 @@
                         </span>
                     </h4>
                 </div>
+
                 <div id="taskpane" class="panel-collapse collapse in">
                     <div class="panel-body">
                        <div ng-controller="TaskPaneController" >
-                           %{--<div ng-controller="AccordionDemoCtrl">--}%
-                               %{--<p>--}%
-                                   %{--<button class="btn btn-default btn-sm" ng-click="status.open = !status.open">Toggle last panel</button>--}%
-                                   %{--<button class="btn btn-default btn-sm" ng-click="status.isFirstDisabled = ! status.isFirstDisabled">Enable / Disable first panel</button>--}%
-                               %{--</p>--}%
-
-                               %{--<label class="checkbox">--}%
-                                   %{--<input type="checkbox" ng-model="oneAtATime">--}%
-                                   %{--Open only one at a time--}%
-                               %{--</label>--}%
-                               %{--<accordion close-others="oneAtATime">--}%
-                                   %{--<accordion-group heading="Static Header, initially expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">--}%
-                                       %{--This content is straight in the template.--}%
-                                   %{--</accordion-group>--}%
-                                   %{--<accordion-group heading="{{group.title}}" ng-repeat="group in groups">--}%
-                                       %{--{{group.content}}--}%
-                                   %{--</accordion-group>--}%
-                                   %{--<accordion-group heading="Dynamic Body Content">--}%
-                                       %{--<p>The body of the accordion group grows to fit the contents</p>--}%
-                                       %{--<button class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>--}%
-                                       %{--<div ng-repeat="item in items">{{item}}</div>--}%
-                                   %{--</accordion-group>--}%
-                                   %{--<accordion-group is-open="status.open">--}%
-                                       %{--<accordion-heading>--}%
-                                           %{--I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>--}%
-                                       %{--</accordion-heading>--}%
-                                       %{--This is just some content to illustrate fancy headings.--}%
-                                   %{--</accordion-group>--}%
-                               %{--</accordion>--}%
-                           %{--</div>--}%
 
                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
                                <div class="panel panel-default">
-                                   <div class="panel-heading" role="tab" id="headingOne">
+
+                                   <div class="panel-heading" role="tab" id="headingOneTask">
                                        <h4 class="panel-title">
-                                           <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
-                                              aria-expanded="false" aria-controls="collapseOne">
-                                               Map Extent
-                                           </a>
-                                       </h4>
-                                   </div>
-                                   <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                       <div class="panel-body">
-                                           <p>Min X: {{extent[0]}}</p>
-                                           <p>Min Y: {{extent[1]}}</p>
-                                           <p>Max X: {{extent[2]}}</p>
-                                           <p>Max Y: {{extent[3]}}</p>
-                                       </div>
-                                   </div>
-                               </div>
-                               <div class="panel panel-default">
-                                   <div class="panel-heading" role="tab" id="headingTwo">
-                                       <h4 class="panel-title">
-                                           <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                           <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                                              href="#collapseOneTask" aria-expanded="false"
+                                              aria-controls="collapseOneTask">
                                                User and Count
                                            </a>
                                        </h4>
-                                   </div>
-                                   <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                   <div class="panel-body">
-                                       <table class="table table-striped">
-                                           <tbody>
-                                               <th>User</th>
-                                               <th>Count</th>
-                                               <tr ng-repeat="user in mapUser track by $index">
-                                                   <td>{{user.user_name}}</td>
-                                                   <td>{{user.count}}</td>
+                                   </div>%{--</ end headingOneTask >--}%
+
+                                   <div id="collapseOneTask" class="panel-collapse collapse in" role="tabpanel"
+                                        aria-labelledby="headingOneTask">
+                                       <div class="panel-body" style="max-height: 475px; overflow-y:scroll;">
+
+                                           %{--<p><strong>Page:</strong> {{tableUsersParams.page()}}--}%
+                                           %{--<p><strong>Count per page:</strong> {{tableUsersParams.count()}}--}%
+
+                                           <table class="table table-striped table-condensed" id="mapUserTable">
+                                               <thead>
+                                               <tr>
+                                                   <th>User</th>
+                                                   <th>Count</th>
                                                </tr>
-                                           </tbody>
-                                       </table>
-                                       </div>
-                                   </div>
-                               </div>
+                                               </thead>
+                                               <tbody>
+                                                   <tr ng-repeat="user in mapUsers track by $index">
+                                                       <td>{{user.user_name}}</td>
+                                                       <td>{{user.count}}</td>
+                                                   </tr>
+                                               </tbody>
+                                           </table>
+
+                                       </div>%{--</ end panel-body >--}%
+                                   </div>%{--</ end collapseOneTask >--}%
+                               </div>%{--</ end panel panel-default >--}%
+
                                <div class="panel panel-default">
-                                   <div class="panel-heading" role="tab" id="headingThree">
+
+                                   <div class="panel-heading" role="tab" id="headingTwoTask">
                                        <h4 class="panel-title">
-                                           <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                           <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                                              href="#collapseTwoTask" aria-expanded="false"
+                                              aria-controls="collapseTwoTask">
                                                IP and Count
                                            </a>
                                        </h4>
-                                   </div>
-                                   <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                       <div class="panel-body">
-                                           <table class="table table-striped">
+                                   </div>%{--</ end headingTwoTask >--}%
+
+                                   <div id="collapseTwoTask" class="panel-collapse collapse" role="tabpanel"
+                                        aria-labelledby="headingTwoTask">
+                                       <div class="panel-body" style="max-height: 475px; overflow-y:scroll;">
+
+                                           <table class="table table-striped table-condensed">
                                                <tbody>
                                                <th>IP</th>
                                                <th>Count</th>
-                                               <tr ng-repeat="ip in mapIp track by $index">
+                                               <tr ng-repeat="ip in mapIps track by $index">
                                                    <td>{{ip.ip}}</td>
                                                    <td>{{ip.count}}</td>
                                                </tr>
                                                </tbody>
                                            </table>
-                                       </div>
-                                   </div>
-                               </div>
+
+                                       </div>%{--</ end panel-body >--}%
+                                   </div>%{--</ end collapseTwoTask >--}%
+                               </div>%{--</ end panel panel-default >--}%
+
                                <div class="panel panel-default">
-                                   <div class="panel-heading" role="tab" id="headingFour">
+
+                                   <div class="panel-heading" role="tab" id="headingThreeTask">
                                        <h4 class="panel-title">
                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
-                                              href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                                              href="#collapseThreeTask" aria-expanded="false"
+                                              aria-controls="collapseThreeTask">
                                                Layer and Count
                                            </a>
                                        </h4>
-                                   </div>
-                                   <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
-                                        aria-labelledby="headingFour">
-                                       <div class="panel-body">
-                                           <table class="table table-striped" id="tableLayers">
+                                   </div>%{--</ end headingThreeTask >--}%
+
+                                   <div id="collapseThreeTask" class="panel-collapse collapse" role="tabpanel"
+                                        aria-labelledby="headingThreeTask">
+                                       <div class="panel-body" style="max-height: 475px; overflow-y:scroll;">
+
+                                           %{--<p><strong>Page:</strong> {{tableLayersParams.page()}}</p>--}%
+                                           %{--<p><strong>Count per page:</strong> {{tableLayersParams.count()}}</p>--}%
+                                           <table class="table table-striped table-condensed" id="tableLayers">
                                                <tbody>
                                                <th>Layer</th>
                                                <th>Count</th>
@@ -405,19 +503,25 @@
                                                </tr>
                                                </tbody>
                                            </table>
-                                       </div>
-                                   </div>
-                               </div>
-                           </div>
+
+                                       </div>%{--</ end panel-body >--}%
+                                   </div>%{--</ end collapseTwoTask >--}%
+                               </div>%{--</ end panel panel-default >--}%
+
+                           </div>%{--</ end panel-group >--}%
+
+                       </div>%{--</ end TaskPaneController >--}%
+                    </div>%{--</ end panel-body >--}%
+                </div>%{--</ end taskpane >--}%
 
 
 
 
 
 
-                       </div>
-                    </div>
-                </div>
+
+
+
             </div>
         </div>
     </div>
