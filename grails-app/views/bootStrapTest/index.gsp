@@ -221,8 +221,11 @@
 <div id="map"></div>
 <div class="row main-row">
     <div class="col-sm-4 col-md-3 sidebar sidebar-left pull-left">
+
         <div class="panel-group sidebar-body" id="accordion-left">
+
             <div class="panel panel-default">
+
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" href="#layers">
@@ -233,95 +236,97 @@
                             <i class="fa fa-chevron-left"></i>
                         </span>
                     </h4>
-                </div>
-
-
-
-
+                </div>%{--</ end panel-heading >--}%
 
                 <div ng-controller="LayersPaneController" id="layers" class="panel-collapse collapse in" style="max-height: 475px; overflow-y:scroll;">
 
+                    <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
 
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingTwo">
+
+                            <div class="panel-heading" role="tab" id="headingOneLayers">
                                 <h4 class="panel-title">
-                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion2"
+                                       href="#collapseOneLayers" aria-expanded="false"
+                                       aria-controls="collapseOneLayers">
                                         Add Layer
                                     </a>
                                 </h4>
-                            </div>
-                            <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel"
-                                 aria-labelledby="headingTwo">
+                            </div>%{--</ end headingOneTask >--}%
+
+                            <div id="collapseOneLayers" class="panel-collapse collapse in" role="tabpanel"
+                                 aria-labelledby="headingOneLayers">
+
                                 <div class="panel-body" style="max-height: 475px; overflow-y:scroll;">
-                                    <form>
-                                        <input type="hidden" ng-model="newLayer.id" />
-                                        <p><b>WMS Url:</b><br>
-                                            <input type="text" ng-model="newLayer.url" /></p>
-                                        <p><b>Layers:</b><br>
-                                            <input type="text" ng-model="newLayer.params.LAYERS" /></p>
-                                        <p><b>Version:</b><br>
-                                            <input type="text" ng-model="newLayer.params.VERSION" /></p>
-                                        <input type="button" value="Add Layer" ng-click="addLayer()" />
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+
+                                        <form>
+                                            <input type="hidden" ng-model="newLayer.id" />
+                                            <p><b>WMS Url:</b><br>
+                                                <input type="text" ng-model="newLayer.url" /></p>
+                                            <p><b>Layers:</b><br>
+                                                <input type="text" ng-model="newLayer.params.LAYERS" /></p>
+                                            <p><b>Version:</b><br>
+                                                <input type="text" ng-model="newLayer.params.VERSION" /></p>
+                                            <input type="button" value="Add Layer" ng-click="addLayer()" />
+                                        </form>
+
+                                </div>%{--</ end panel-body >--}%
+
+                            </div>%{--</ end headingOneLayers >--}%
+
+                        </div>%{--</ end panel-group >--}%
+
                         <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingThree">
+
+                            <div class="panel-heading" role="tab" id="headingTwoLayers">
                                 <h4 class="panel-title">
-                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion2"
+                                       href="#collapseTwoLayers" aria-expanded="false"
+                                       aria-controls="collapseTwoLayers">
                                         Layer list
                                     </a>
                                 </h4>
-                            </div>
-                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            </div>%{--</ end panel-heading >--}%
+
+                            <div id="collapseTwoLayers" class="panel-collapse collapse" role="tabpanel"
+                                 aria-labelledby="headingTwoLayers">
+
                                 <div class="panel-body" style="max-height: 475px; overflow-y:scroll;">
+
                                     <div ng-repeat="layer in layers" style="padding-left: 15px">
 
+                                            <p><b>Id:</b><br>
+                                                {{ layer.id }}</p>
+                                            <p><b>Url:</b><br>
+                                                {{ layer.url }}</p>
+                                            <p><b>params.LAYERS:</b><br>
+                                                {{ layer.params.LAYERS }}</p>
+                                            <p><b>params.VERSION:</b><br>
+                                                {{ layer.params.VERSION }}</p>
+                                            <p><b>Horizontal Swipe:</b><br>
+                                                <input type="range" ng-model="layer.swipe" ng-change="swipe(layer.id)" /></p>
+                                            <p><b>Visible:</b><br>
+                                                <input type="checkbox" ng-model="layer.visible" ng-change="visible(layer.id)" /></p>
+                                            <p><b>opacity:</b><br>
+                                                <input type="range" min="0" max="1" step="0.01" ng-model="layer.opacity" ng-change="opacity(layer.id)">
+                                            <p><b>Actions:</b><br>
+                                                <a href="#" ng-click="edit(layer.id)">edit</a> |
+                                                <a href="#" ng-click="delete(layer.id)">delete</a> |
+                                                <a href="#" ng-click="addLayerToMap(layer.id)">add</a>
 
-                                        <p><b>Id:</b><br>
-                                            {{ layer.id }}</p>
-                                        <p><b>Url:</b><br>
-                                            {{ layer.url }}</p>
-                                        <p><b>params.LAYERS:</b><br>
-                                            {{ layer.params.LAYERS }}</p>
-                                        <p><b>params.VERSION:</b><br>
-                                            {{ layer.params.VERSION }}</p>
-                                        <p><b>Horizontal Swipe:</b><br>
-                                            <input type="range" ng-model="layer.swipe" ng-change="swipe(layer.id)" /></p>
-                                        <p><b>Visible:</b><br>
-                                            <input type="checkbox" ng-model="layer.visible" ng-change="visible(layer.id)" /></p>
-                                        <p><b>opacity:</b><br>
-                                            <input type="range" min="0" max="1" step="0.01" ng-model="layer.opacity" ng-change="opacity(layer.id)">
-                                        <p><b>Actions:</b><br>
-                                            <a href="#" ng-click="edit(layer.id)">edit</a> |
-                                            <a href="#" ng-click="delete(layer.id)">delete</a> |
-                                            <a href="#" ng-click="addLayerToMap(layer.id)">add</a>
+                                    </div>%{--</ end layer in layers >--}%
 
+                                </div>%{--</ end panel-body >--}%
 
+                            </div>%{--</ end collapseTwoLayers >--}%
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        %{--<div class="panel panel-default">--}%
-                            %{--<div class="panel-heading" role="tab" id="headingFour">--}%
-                                %{--<h4 class="panel-title">--}%
-                                    %{--<a class="collapsed" data-toggle="collapse" data-parent="#accordion"--}%
-                                       %{--href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">--}%
-                                        %{--Extra--}%
-                                    %{--</a>--}%
-                                %{--</h4>--}%
-                            %{--</div>--}%
-                            %{--<div id="collapseFour" class="panel-collapse collapse" role="tabpanel"--}%
-                                 %{--aria-labelledby="headingFour">--}%
-                                %{--<div class="panel-body" style="max-height: 475px; overflow-y:scroll;">--}%
-                                    %{--Extra, if needed...--}%
-                                %{--</div>--}%
-                            %{--</div>--}%
-                        %{--</div>--}%
-                    </div>
+                        </div>%{--</ end panel panel-default >--}%
+
+                    </div> %{--</ end accordian >--}%
+
+                </div>%{--</ end LayersController >--}%
+
+            </div>%{--</ end panel panel-default >--}%
 
 
 
@@ -342,19 +347,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-                </div>
-            </div>
+        %{--Tools Panel--}%
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
@@ -376,15 +369,10 @@
         </div>
     </div>
 
-
-
-
-
-
-
     <div class="col-sm-4 col-md-6 mid"></div>
     <div class="col-sm-4 col-md-3 sidebar sidebar-right pull-right">
 
+        %{--Task Panel--}%
         <div class="panel-group sidebar-body" id="accordion-right">
             <div class="panel panel-default">
 
@@ -398,7 +386,7 @@
                             <i class="fa fa-chevron-right"></i>
                         </span>
                     </h4>
-                </div>
+                </div>%{--</ end panel-heading >--}%
 
                 <div id="taskpane" class="panel-collapse collapse in">
                     <div class="panel-body">
@@ -420,6 +408,7 @@
 
                                    <div id="collapseOneTask" class="panel-collapse collapse in" role="tabpanel"
                                         aria-labelledby="headingOneTask">
+
                                        <div class="panel-body" style="max-height: 475px; overflow-y:scroll;">
 
                                            %{--<p><strong>Page:</strong> {{tableUsersParams.page()}}--}%
@@ -441,7 +430,9 @@
                                            </table>
 
                                        </div>%{--</ end panel-body >--}%
+
                                    </div>%{--</ end collapseOneTask >--}%
+
                                </div>%{--</ end panel panel-default >--}%
 
                                <div class="panel panel-default">
@@ -458,6 +449,7 @@
 
                                    <div id="collapseTwoTask" class="panel-collapse collapse" role="tabpanel"
                                         aria-labelledby="headingTwoTask">
+
                                        <div class="panel-body" style="max-height: 475px; overflow-y:scroll;">
 
                                            <table class="table table-striped table-condensed">
@@ -472,7 +464,9 @@
                                            </table>
 
                                        </div>%{--</ end panel-body >--}%
+
                                    </div>%{--</ end collapseTwoTask >--}%
+
                                </div>%{--</ end panel panel-default >--}%
 
                                <div class="panel panel-default">
@@ -489,6 +483,7 @@
 
                                    <div id="collapseThreeTask" class="panel-collapse collapse" role="tabpanel"
                                         aria-labelledby="headingThreeTask">
+
                                        <div class="panel-body" style="max-height: 475px; overflow-y:scroll;">
 
                                            %{--<p><strong>Page:</strong> {{tableLayersParams.page()}}</p>--}%
@@ -505,7 +500,9 @@
                                            </table>
 
                                        </div>%{--</ end panel-body >--}%
+
                                    </div>%{--</ end collapseTwoTask >--}%
+
                                </div>%{--</ end panel panel-default >--}%
 
                            </div>%{--</ end panel-group >--}%
@@ -524,7 +521,9 @@
 
             </div>
         </div>
+
     </div>
+
 </div>
 <div class="mini-submenu mini-submenu-left pull-left">
     <i class="fa fa-list-alt"></i>
